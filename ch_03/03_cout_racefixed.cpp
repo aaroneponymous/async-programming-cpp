@@ -2,6 +2,15 @@
 #include <thread>
 #include <syncstream> // c++ 20 onwards
 
+/**
+ * The primary purpose of std::osyncstream is to prevent output from multiple threads 
+ * to the same stream from becoming interleaved or garbled.
+ *  
+ * It achieves this by buffering output operations and 
+ * then atomically transferring the buffered content to the wrapped stream (e.g., std::cout) 
+ * upon destruction of the osyncstream object or when explicitly flushed.
+ */
+
 #define sync_cout std::osyncstream(std::cout)
 
 int main() {

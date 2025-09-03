@@ -2,6 +2,9 @@
 #include <thread>
 
 
+// Race Condition on std::cout
+
+
 int main() {
     std::thread t1([] () {
         for (int i = 0; i < 100; ++i) {

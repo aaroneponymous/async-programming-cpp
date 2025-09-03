@@ -72,7 +72,34 @@ int main()
     });
 
     // t4: function object class
-    std::thread t4{FuncObjectClass()};  // used { } to initialize the FuncObjectClass and then call
+    std::thread t4{FuncObjectClass()};  // used { } to initialize the FuncObjectClass and then call to avoid Most Vex Parsing Error
+
+    /**
+     * What happens here:
+     * 
+     * - `FuncObjectClass()` creates a temporary function object.
+     * - The braced initializer `{...}` is used to construct the `std::thread` with that temporary.
+     * - This avoids the "most vexing parse" problem that would arise if you wrote:
+     * 
+     *     std::thread t4(FuncObjectClass());
+     * 
+     *   which the compiler could interpret as a function declaration instead of an object.
+     * 
+     * Correction to your comment:
+     * 
+     * - Your idea is right: using `{}` avoids the most vexing parse.
+     * - But to be precise, the code is:
+     *   * Initializing a `std::thread` object with a temporary `FuncObjectClass`.
+     *   * The braces are what disambiguate it from a function declaration.
+     * 
+     * Better comment:
+     * 
+     *     // Start a std::thread with a temporary FuncObjectClass.
+     *     // Using {} avoids the most vexing parse (interpreting it as a function declaration).
+    */
+
+
+
 
     // t5: non-static member function
     Obj obj;
